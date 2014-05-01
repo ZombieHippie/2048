@@ -75,6 +75,7 @@ namespace Application {
 							Console.SetWindowPosition(
 								Console.WindowLeft-1, Console.WindowTop);
 						*/
+						game.left ();
 						break;
 					case ConsoleKey.UpArrow:
 						/*
@@ -82,6 +83,7 @@ namespace Application {
 							Console.SetWindowPosition(
 								Console.WindowLeft, Console.WindowTop-1);
 						*/
+						game.up ();
 						break;
 					case ConsoleKey.RightArrow:
 						/*
@@ -89,6 +91,7 @@ namespace Application {
 							Console.SetWindowPosition(
 								Console.WindowLeft+1, Console.WindowTop);
 						*/
+						game.right ();
 						break;
 					case ConsoleKey.DownArrow:
 						/*
@@ -96,6 +99,7 @@ namespace Application {
 							Console.SetWindowPosition(
 								Console.WindowLeft, Console.WindowTop+1);
 						*/
+						game.down ();
 						break;
 					}
 				} 

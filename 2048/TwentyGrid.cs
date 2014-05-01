@@ -19,8 +19,8 @@ namespace Application
 		}
 		public void setColumn (int col, Array vals)
 		{
-			for (int index = 0; index < 4; index++) {
-				boxes.SetValue(vals.GetValue(index), index * 4 + col);
+			for (int row = 0; row < 4; row++) {
+				boxes.SetValue(vals.GetValue(row), row * 4 + col);
 			}
 		}
 		public Array getColumn (int col)
@@ -42,6 +42,19 @@ namespace Application
 				res.SetValue(boxes.GetValue(row * 4 + col), col);
 			}
 			return res;
+		}
+		public bool setEmpty (int val, int start)
+		{
+			for (int index = 0; index < 16; index++)
+			{
+				int randomIndex = (index + start) % 16;
+				if ((int) boxes.GetValue (randomIndex) == 0)
+				{
+					boxes.SetValue (val, randomIndex);
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 }
