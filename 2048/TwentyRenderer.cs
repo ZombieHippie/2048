@@ -1,32 +1,19 @@
 using System;
 using System.Collections;
+using System.IO;
 using System.Text;
 
 namespace Application
 {
 	class TwentyRenderer
 	{
-		public TwentyRenderer () {
-		}
-		const string ROWSeparator = "+---++---++---++---+";
-		private string padInt (int val, int target) {
-			string res = val.ToString();
-			int padding = (int) (target - res.Length) / 2;
-			for (int a = 0; a < padding; a++) {
-				res = " " + res + " ";
-			}
-			if (res.Length < target) {
-				res += " ";
-			}
-			return res;
-		}
-		private string buildRow (Array row)
+		static byte[] GetBytes(object str)
 		{
-			StringBuilder res = new StringBuilder();
-			foreach (int val in row) {
-				res.Append (padInt (val, 5));
-			}
-			return ROWSeparator + res.ToString () + ROWSeparator;
+			return System.Text.Encoding.ASCII.GetBytes (str.ToString ().ToCharArray ());
+		}
+		Stream buf;
+		public TwentyRenderer () {
+			buf = Console.OpenStandardOutput();
 		}
 		public void text (string str) {
 			Console.Clear ();
@@ -34,13 +21,15 @@ namespace Application
 		}
 		public void render(TwentyGrid grid, int score)
 		{
-			StringBuilder newBuffer = new StringBuilder();
-			for ( int row = 0; row < 4; row++ ) {
-				newBuffer.Append(buildRow (grid.getRow (row)));
+			byte[] newBuffer = new byte[280];
+			for (int row = 0; row < 4; row++) {
+				Array rowVals = grid.getRow (row);
+				for (int col = 0; col < 4; col++) {
+					int offset = row * 20 + col * 5;
+					GetBytes (rowVals.GetValue (col)).CopyTo(newBuffer, offset);
+				}
 			}
-			Console.Clear ();
-			//Console.Write (newBuffer.ToString());
-			Console.Write ((string)newBuffer.ToString());
+			buf.Write (newBuffer, 0, 260);
 		}
 	}
 }

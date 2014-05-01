@@ -42,21 +42,39 @@ namespace Application
 
 				res.SetValue (next, index + shift);
 			}
-			return res;
+			if (shift == 0) {
+				return null;
+			} else {
+				return res;
+			}
 		}
 
 		private void hcondense (int dir) {
+			bool modified = false;
 			for (int row = 0; row < 4; row++) {
-				grid.setRow (row, logic (grid.getRow (row), dir));
+				Array newRow = logic (grid.getRow (row), dir);
+				if (newRow != null) {
+					grid.setRow (row, newRow);
+					modified = true;
+				}
 			}
-			postCondense ();
+			if (modified) {
+				postCondense ();
+			}
 		}
 
 		private void vcondense (int dir) {
+			bool modified = false;
 			for (int column = 0; column < 4; column++) {
-				grid.setColumn (column, logic (grid.getColumn (column), dir));
+				Array newColumn = logic (grid.getColumn (column), dir);
+				if (newColumn != null) {
+					grid.setColumn (column, newColumn);
+					modified = true;
+				}
 			}
-			postCondense ();
+			if (modified) {
+				postCondense ();
+			}
 		}
 
 		public void left () {
